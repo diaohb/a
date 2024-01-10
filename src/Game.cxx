@@ -23,7 +23,6 @@ void Game::Run()
     else
         printf("\033[19;1H\033[Kdraw! game over!\n");
 }
-// TODO
 float Game::p_to_win(std::vector<int> list1,std::vector<int> list2){
     float p=0;
     int player;
@@ -55,12 +54,12 @@ void Game::judge_first()
     {
         printf("\033[19;1H\033[Kselect first hand(1) or second hand(2): ");
         std::cin >> a;
-        if (a == "1")
+        if (a == "2")
         {
             is_first = 1;
             break;
         }
-        else if (a == "2")
+        else if (a == "1")
         {
             is_first = 0;
             break;
@@ -364,27 +363,108 @@ bool Game::second_hand()
     }
     else if (i % 2 == 0)
     {
-        play(8-i,1);
+        play(4,1);
         play(i=get_input(),2);
-        if(i==4){
-            play(3*abs(4-tmp)-6,1);
+        if(i==(tmp%6)*2+(tmp>4)*2+1){
+            play((tmp%6)*3-(tmp>4)*2+2,1);  
             play(i=get_input(),2);
-            if(i!=(tmp*tmp-10*tmp+28)/4){
-                play((tmp*tmp-10*tmp+28)/4,1);
+            if(i!=-(tmp%6)*3+(tmp>4)*2+6){
+                play(-(tmp%6)*3+(tmp>4)*2+6,1);
                 return 1;
             }
-            play((-tmp*tmp+10*tmp+4)/4,1);
+            play(-(tmp%6)+(tmp>4)*4+3,1);
             play(i=get_input(),2);
-            if(i!=3-tmp%6){
-                play(3-tmp%6,1);
+            if(i!=(tmp%6)-(tmp>4)*4+5){
+                play((tmp%6)-(tmp>4)*4+5,1);
+                return 1;
             }
-            else{
-                play(5+tmp%6,1);
-            }
+            play(8-tmp,1);
             play(i=get_input(),2);
         }
-        else if(i==tmp){///TODO
-
+        else if(i==(tmp%6)*3-(tmp>4)*2+2){
+            play((tmp%6)*2+(tmp>4)*2+1,1);
+            play(i=get_input(),2);
+            if(i!=-2*(tmp%6)-(tmp>4)*2+7){
+                play(-2*(tmp%6)-(tmp>4)*2+7,1);
+                return 1;
+            }
+            play(-(tmp%6)+(tmp>4)*4+3,1);
+            play(i=get_input(),2);
+            if(i!=(tmp%6)-(tmp>4)*4+5){
+                play((tmp%6)-(tmp>4)*4+5,1);
+                return 1;
+            }
+            play(8-tmp,1);
+            play(i=get_input(),2);
+        }
+        else if(i==(tmp%6)-(tmp>4)*4+5){
+            play(8-tmp,1);
+            play(i=get_input(),2);
+            if(i==(tmp%6)*2+(tmp>4)*2+1){
+                play((tmp%6)*3-(tmp>4)*2+2,1);  
+                play(i=get_input(),2);
+                if(i!=-(tmp%6)*3+(tmp>4)*2+6){
+                    play(-(tmp%6)*3+(tmp>4)*2+6,1);
+                    return 1;
+                }
+                play(-(tmp%6)+(tmp>4)*4+3,1);
+                play(i=get_input(),2);
+            }
+            else if(i==(tmp%6)*3-(tmp>4)*2+2){
+                play((tmp%6)*2+(tmp>4)*2+1,1);
+                play(i=get_input(),2);
+                if(i!=-2*(tmp%6)-(tmp>4)*2+7){
+                    play(-2*(tmp%6)-(tmp>4)*2+7,1);
+                    return 1;
+                }
+                play(-(tmp%6)+(tmp>4)*4+3,1);
+                play(i=get_input(),2);
+            }
+            else if(i==-(tmp%6)+(tmp>4)*4+3){
+                play(-(tmp%6)*3+(tmp>4)*2+6,1);
+                play(i=get_input(),2);
+                if(i!=-2*(tmp%6)-(tmp>4)*2+7){
+                    play(-2*(tmp%6)-(tmp>4)*2+7,1);
+                    return 1;
+                }
+                play((tmp%6)*3-(tmp>4)*2+2,1);
+                return 1;
+            }
+            else if(i==-(tmp%6)*3+(tmp>4)*2+6){
+                play(-(tmp%6)+(tmp>4)*4+3,1);
+                play(i=get_input(),2);
+                if(i==(tmp%6)*3-(tmp>4)*2+2){
+                    play((tmp%6)*2+(tmp>4)*2+1,1);
+                }
+                play((tmp%6)*3-(tmp>4)*2+2,1);
+                play(i=get_input(),2);
+            }
+            else if(i==-2*(tmp%6)-(tmp>4)*2+7){
+                play((tmp%6)*3-(tmp>4)*2+2,1);
+                play(i=get_input(),2);
+                if(i!=-(tmp%6)*3+(tmp>4)*2+6){
+                    play(-(tmp%6)*3+(tmp>4)*2+6,1);
+                    return 1;
+                }
+                play(-(tmp%6)+(tmp>4)*4+3,1);
+                play(i=get_input(),2);
+            }
+        }
+        else if(i==8-tmp){
+            play((tmp%6)*2+(tmp>4)*2+1,1);
+            play(i=get_input(),2);
+            if(i!=-2*(tmp%6)-(tmp>4)*2+7){
+                play(-2*(tmp%6)-(tmp>4)*2+7,1);
+                return 1;
+            }
+            play(-(tmp%6)*3+(tmp>4)*2+6,1);
+            play(i=get_input(),2);
+            if(i!=(tmp%6)*3-(tmp>4)*2+2){
+                play((tmp%6)*3-(tmp>4)*2+2,1);
+                return 1;
+            }
+            play((tmp%6)-(tmp>4)*4+5,1);
+            play(i=get_input(),2);
         }
     }
     return 0;
